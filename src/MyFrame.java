@@ -28,7 +28,7 @@ public class MyFrame extends JFrame {
         this.getContentPane().setBackground(Color.black);
         this.setTitle("Clock");
         this.setLayout(new FlowLayout());
-        this.setMinimumSize(new Dimension(600, 200));
+        this.setMinimumSize(new Dimension(600, 300));
         this.setResizable(true);
         this.setTitle("Clock");
 
@@ -74,11 +74,32 @@ public class MyFrame extends JFrame {
 
         timezoneComboBox.addActionListener
         (new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String selectedTimezone = (String) timezoneComboBox.getSelectedItem();
-        TimeZone timeZone = TimeZone.getTimeZone(selectedTimezone);
-        Calendar calendar = Calendar.getInstance(timeZone);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+             String selectedTimezone = (String) timezoneComboBox.getSelectedItem();
+            TimeZone timeZone = TimeZone.getTimeZone(selectedTimezone);
+            Calendar calendar = Calendar.getInstance(tim);
+
+             String currentTime = timeFormat.format(calendar.getTime());
+            timeLabel.setText(currentTime);
+
+            String day = dayFormat.format(calendar.getTime());
+            dayLabel.setText(day);
+
+            String date = dateFormat.format(calendar.getTime());
+            dateLabel.setText(date);
+        }
+    });
+
+    this.add(timezoneComboBox);
+
+    this.setVisible(true);
+    setTime();
+    }
+
+    public void setTime() {
+        while (true) {
+        Calendar calendar = Calendar.getInstance();
 
         String currentTime = timeFormat.format(calendar.getTime());
         timeLabel.setText(currentTime);
@@ -88,33 +109,12 @@ public class MyFrame extends JFrame {
 
         String date = dateFormat.format(calendar.getTime());
         dateLabel.setText(date);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        }
     }
-});
-
-this.add(timezoneComboBox);
-
-this.setVisible(true);
-setTime();
-}
-
-public void setTime() {
-while (true) {
-    Calendar calendar = Calendar.getInstance();
-
-    String currentTime = timeFormat.format(calendar.getTime());
-    timeLabel.setText(currentTime);
-
-    String day = dayFormat.format(calendar.getTime());
-    dayLabel.setText(day);
-
-    String date = dateFormat.format(calendar.getTime());
-    dateLabel.setText(date);
-
-    try {
-        Thread.sleep(1000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    }
-}
-}
 }
