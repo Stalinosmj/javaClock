@@ -1,15 +1,10 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import static java.lang.Thread.sleep;
 
 public class MyFrame extends JFrame {
 
@@ -20,8 +15,6 @@ public class MyFrame extends JFrame {
     JLabel timeLabel;
     JLabel dayLabel;
     JLabel dateLabel;
-
-    String currentTime, Day, Date;
 
     MyFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,12 +66,10 @@ public class MyFrame extends JFrame {
         timezoneComboBox.setBackground(new java.awt.Color(2, 48, 32));
 
         timezoneComboBox.addActionListener
-        (new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        (e -> {
              String selectedTimezone = (String) timezoneComboBox.getSelectedItem();
             TimeZone timeZone = TimeZone.getTimeZone(selectedTimezone);
-            Calendar calendar = Calendar.getInstance(tim);
+            Calendar calendar = Calendar.getInstance(timeZone);
 
              String currentTime = timeFormat.format(calendar.getTime());
             timeLabel.setText(currentTime);
@@ -88,8 +79,7 @@ public class MyFrame extends JFrame {
 
             String date = dateFormat.format(calendar.getTime());
             dateLabel.setText(date);
-        }
-    });
+        });
 
     this.add(timezoneComboBox);
 
@@ -111,7 +101,7 @@ public class MyFrame extends JFrame {
         dateLabel.setText(date);
 
         try {
-            Thread.sleep(1000);
+            sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
